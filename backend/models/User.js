@@ -4,22 +4,24 @@ const bcrypt = require('bcryptjs');
 
 //crear un usuario
 async function signUp(user){
-    const {username, email, password} = user;
+    const hashedPassword = await bcrypt.hash(password, 10);
     const [result] = await pool.query(
         'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-        [username, email, password]
+        [username, email, hashedPassword]
     );
     return result.insertId;
 }
 
 //registrar un usuario
-async function signUp({email, password}){
+async function login({email, password}){
     const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
     if(rows.length === 0) return null;
+
     const user = rows[0];
     const passwordMatch = await bcrypt.compare(password, user.password);
     if(!passwordMatch) return null;
-    return user;
+
+    return user; // retorna al usuario si todo es correcto
 }
 
 //editar perfil de usuario
@@ -33,8 +35,8 @@ async function editProfile(user_id, {full_name, address, phone, avatar_url}){
 
 
 //cambiar la contrasenia
-async function changePassword(user_id, {password}){
-    const hashedPassword = await bcrypt.hash(password, 10);
+async function changePassword(user_id, newPassword){
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     const [result] = await pool.query(
         'UPDATE users SET password = ? WHERE user_id = ?',
         [hashedPassword, user_id]
@@ -44,7 +46,7 @@ async function changePassword(user_id, {password}){
 
 //lista de usuarios(para el admin)
 async function getAllUsers(){
-    const [rows] = await pool.query('SELECT * FROM users');
+    const [rows] = await pool.query('SELECT user_id, username, email, role FROM users');
     return rows;
 }
 
@@ -58,4 +60,8 @@ module.exports = {
     getAllUsers,
     signUp,
     login,
-}
+    editProfile,
+    changePassword,
+    getAllUsers,
+    deleteUser
+};
