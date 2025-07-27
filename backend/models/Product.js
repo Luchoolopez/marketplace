@@ -61,7 +61,7 @@ async function filterByCategory({name, price, category_id}){
     }
 
     const [rows] = await pool.query(query, params);
-    return rows
+    return rows;
 }
 
 module.exports = {
