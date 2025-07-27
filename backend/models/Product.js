@@ -28,14 +28,48 @@ async function updateProduct(product_id, data){
     return result.affectedRows > 0;
 }
 
+//desactiva el producto, no lo elimina
 async function deleteProduct(product_id){
-
+    const [result] = await pool.query(
+        'UPDATE products SET is_active = FALSE WHERE product_id = ?', [product_id]
+    );
+    return result.affectedRows > 0;
 }
 
-async function updateStock(){
-
+async function updateStock(product_id, stock){
+    const [result] = await pool.query(
+        'UPDATE products SET stock = ? WHERE product_id = ?', [stock, product_id]
+    );
+    return result.affectedRows > 0;
 }
 
-async function filterByCategory(){
+async function filterByCategory({name, price, category_id}){
+    let query = 'SELECT * FROM products WHERE is_active = TRUE';
+    let params = [];
 
+    if(category_id){
+        query += 'AND category_id = ?';
+        params.push(category_id);
+    }
+    if(name){
+        query += 'AND name LIKE ?';
+        params.push(`%${name}%`);
+    }
+    if(price){
+        query += 'AND price = ?';
+        params.push(price);
+    }
+
+    const [rows] = await pool.query(query, params);
+    return rows
+}
+
+module.exports = {
+    createProduct,
+    getAllProducts,
+    getProductById,
+    updateProduct,
+    deleteProduct,
+    updateStock,
+    filterByCategory
 }
