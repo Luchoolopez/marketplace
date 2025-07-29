@@ -1,9 +1,9 @@
 const morgan = require('morgan');
-const helmet = require('helmter');
+const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 const helmetMiddleware = helmet();
-const morganMiddleware = morgan();
+const morganMiddleware = morgan('dev');
 const limiter = rateLimit({
     windowMs: 15*60*1000, //15 minutos
     max: 100 //maximo de 100 peticiones por IP
