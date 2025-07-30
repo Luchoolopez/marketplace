@@ -9,6 +9,7 @@ exports.signUp = async (req, res) => {
         const userId = await User.signUp(value);
         res.status(201).json({ userId });
     } catch (error) {
+        console.error(error)
         res.status(500).json({ error: 'Error al registrar un usuario' });
     }
 };

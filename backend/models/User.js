@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 //crear un usuario
 async function signUp(user){
-    const {email, username, password} = user;
+    const {email, username, password} = user; 
     const hashedPassword = await bcrypt.hash(password, 10);
     const [result] = await pool.query(
         'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
