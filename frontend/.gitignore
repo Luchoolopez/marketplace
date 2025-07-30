@@ -28,3 +28,9 @@ Thumbs.db
 coverage/
 # Misc
 *.local
+
+
+# Docker
+docker-compose.override.yml
+*.pid
+*.sock
