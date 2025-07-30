@@ -19,4 +19,4 @@ router.put('/eliminar-producto/:producto_id', deleteProduct);
 router.put('/actualizar-stock', updateStock);
 router.get('/filtrar-productos', filterByCategory);
 
-module.exports = router
+module.exports = router;

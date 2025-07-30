@@ -5,15 +5,17 @@ const {helmetMiddleware, morganMiddleware, limiter, notFoundHandler} = require('
 const errorHandler = require('./middlewares/errorHandler');
 const PORT = 3000;
 
+const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
+
 app.use(express.json()); //para parsear a JSON las peticiones
 app.use(cors()); 
 app.use(helmetMiddleware);
 app.use(morganMiddleware);
 app.use(limiter);
 
-app.get('/', (req, res) => {
-    res.send('Hola mundo');
-});
+app.use('/api/auth', userRoutes);
+app.use('/api/auth', productRoutes)
 
 app.use(notFoundHandler);
 app.use(errorHandler);
