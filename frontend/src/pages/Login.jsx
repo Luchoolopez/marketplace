@@ -32,7 +32,7 @@ const Login = () => {
             {error && <div className="error-message">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Email:</label>
+                    <label>Email</label>
                     <input
                         type="email"
                         value={email}
@@ -50,6 +50,7 @@ const Login = () => {
                     />
                 </div>
                 <button type="submit">Iniciar Sesión</button>
+                <a href="/registrarse">Todavia no tenes una cuenta?</a>
             </form>
         </div>
     )
