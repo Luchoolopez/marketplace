@@ -1,6 +1,7 @@
 import React, { use, useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Login.css'
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -8,11 +9,11 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
-        try{
+        try {
             const response = await axios.post('http://localhost:3000/api/auth/iniciar-sesion', {
                 email,
                 password
@@ -21,7 +22,7 @@ const Login = () => {
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
             navigate('/');
-        }catch(error){
+        } catch (error) {
             setError(error.response?.data?.error || 'Error al iniciar sesion');
         }
     }
@@ -32,25 +33,27 @@ const Login = () => {
             {error && <div className="error-message">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Email</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Correo Electronico"
                         required
                     />
                 </div>
                 <div className="form-group">
-                    <label>Contraseña</label>
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Contraseña"
                         required
                     />
                 </div>
-                <button type="submit">Iniciar Sesión</button>
-                <a href="/registrarse">Todavia no tenes una cuenta?</a>
+                <div className="login-container-btn">
+                    <button type="submit">Iniciar Sesión</button>
+                    <a href="/registrarse">Todavia no tenes una cuenta?</a>
+                </div>
             </form>
         </div>
     )

@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(
+        to bottom right,
+        #403F44, #1E1B32
+    );
+}
+
+:root {
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: rgba(31, 38, 135, 0.37);
+  --glass-radius: 12px;
+}
+
+.register-container{
+    height: 600px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: #fafafa10;
+    backdrop-filter: blur(0.4rem);
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 var(--glass-shadow);
+    border-radius: var(--glass-radius);
+    padding: 2rem;
+    color: white;
+}
+
+.register-container h2{
+    font-size: 45px;
+    padding-bottom: 70px;
+    padding-top: 50px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    width: 400px;
+}
+
+.form-group input{
+    flex: 1;
+    padding: 8px;
+    border-radius: 40px;
+    height: 45px;
+}
+
+.register-container-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    gap: 8px;
+}
+
+.register-container-btn button {
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    border: black;
+    cursor: pointer;
+    transition: 
+        background 0.3s,
+        color 0.3s,
+        width 0.3s,
+        height 0.3s;
+}
+
+.register-container-btn button:hover{
+    background: black;
+    color: white;
+    height: 45px;
+    width: 130px;
+}
+
+.register-container-btn a{
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.register-container-btn a:hover{
+    color: white;
+}
