@@ -3,7 +3,7 @@ const pool = require('../config/db');
 async function createProduct(product){
     const { seller_id, category_id, name, description, price, stock, image_url } = product;
     const [result] = await pool.query(
-        'INSERT INTO products (seller_id, category_id, name, description, price, stock, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        'INSERT INTO products (seller_id, category_id, name, description, price, stock, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)',
         [seller_id, category_id, name, description, price, stock, image_url]
     );
     return result.insertId;

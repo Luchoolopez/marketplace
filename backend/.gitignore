@@ -29,6 +29,8 @@ coverage/
 # Misc
 *.local
 
+consultas.txt
+
 # Docker
 docker-compose.override.yml
 *.pid

@@ -9,6 +9,7 @@ exports.createProduct = async (req, res) => {
         const product_id = await Product.createProduct(value);
         return res.status(201).json({ product_id });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({ error: 'Error al crear el producto' })
     }
 };
