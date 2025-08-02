@@ -38,8 +38,8 @@ const Header = () => {
                 <img src="/images/kira_store_logo_white.png" alt="kira_logo_store"></img>
             </div>
             <div className="header-container-links">
-                <a>Inicio</a>
-                <a>Productos</a>
+                <a href="/">Inicio</a>
+                <a href="/productos">Productos</a>
                 <a>Contacto</a>
             </div>
             <div className="header-container-btn">

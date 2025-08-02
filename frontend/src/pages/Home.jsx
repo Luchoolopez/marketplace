@@ -1,8 +1,6 @@
 import React from 'react'
 import Product from './Products'
 import Layout from '../components/Layout'
-import Header from '../components/Header'
-
 
 const Home = () => {
   return (
