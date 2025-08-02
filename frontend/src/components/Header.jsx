@@ -15,14 +15,20 @@ const Header = () => {
             }
         }
         if(showSearch){
-            document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside);
         }else{
-            document,removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         }
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [showSearch]);
+
+    const handleSearchClick = () => {
+        if(!showSearch){
+            setShowSearch(true);
+        }
+    }
 
 
 
@@ -37,20 +43,18 @@ const Header = () => {
                 <a>Contacto</a>
             </div>
             <div className="header-container-btn">
-                <a onClick={() => setShowSearch(!showSearch)}><IoSearchCircle/></a>
+                <a onClick={handleSearchClick}><IoSearchCircle/></a>
                 <a><FaUserCircle/></a>
                 <a><FaCartShopping/></a>
             </div>
-            {showSearch && (
                 <input
                     ref={searchRef}
                     type="text"
-                    className={`header-seach-input${showSearch ? " visible" : ""}`}
+                    className={`header-search-input${showSearch ? " visible" : ""}`}
                     placeholder="Buscar"
                     autoFocus={showSearch}
                     style={{display: showSearch ? 'flex' : 'flex'}}
                 />
-            )}
         </div>
     );
 }

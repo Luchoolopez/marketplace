@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ProductCard from '../components/ProductCard';
-import {getAllProducts} from '../services/api';
+import { useProducts } from '../hooks/useProducts';
 
 const Product = () => {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const fetchProducts = async() => {
-      try{
-        const data = await getAllProducts();
-        setProducts(data);
-      }catch(error){
-        setError('Error al cargar los productos');
-      }
-    };
-    fetchProducts();
-  }, []);
+  const {products, error, loading} = useProducts();
+  if(loading) return <div>Cargando productos...</div>;
 
   return (
     <div>
