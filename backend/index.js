@@ -13,6 +13,7 @@ app.use(cors());
 app.use(helmetMiddleware);
 app.use(morganMiddleware);
 app.use(limiter);
+app.use(express.static('public'));
 
 app.use('/api/auth', userRoutes);
 app.use('/api/auth', productRoutes)

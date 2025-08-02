@@ -24,11 +24,10 @@ const Product = () => {
       {error && <div>{error}</div>}
       <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px'}}>
         {products.map(product => (
-          <>
-          <ProductCard key={product.product_id} product={product}/>
-          <button>Comprar</button>
-          </>
-
+          <React.Fragment key={product.product_id}>
+            <ProductCard product={product}/>
+            <button>Comprar</button>
+          </React.Fragment>
         ))}
       </div>
     </div>

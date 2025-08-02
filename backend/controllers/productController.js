@@ -4,8 +4,10 @@ const path = require('path');
 const { createProductSchema, updateProductSchema, filterProductsSchema } = require('../schemas/productSchema');
 
 exports.createProduct = async (req, res) => {
-    if(req.file){
-        req.body.image_url = req.file.path.replace('public', '');
+    if (req.file) {
+        let url = req.file.path.replace(/\\/g, '/').replace('public', '');
+        if (!url.startsWith('/')) url = '/' + url;
+        req.body.image_url = url;
     }
 
     //convierte campos numericos
