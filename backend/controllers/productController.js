@@ -1,14 +1,39 @@
 const Product = require('../models/Product');
+const fs = require('fs');
+const path = require('path');
 const { createProductSchema, updateProductSchema, filterProductsSchema } = require('../schemas/productSchema');
 
 exports.createProduct = async (req, res) => {
+    if(req.file){
+        req.body.image_url = req.file.path.replace('public', '');
+    }
+
+    //convierte campos numericos
+    if(req.body.price) req.body.price = Number(req.body.price);
+    if(req.body.stock) req.body.stock = Number(req.body.stock);
+    if(req.body.seller_id) req.body.seller_id = Number(req.body.seller_id);
+    if(req.body.category_id) req.body.category_id = Number(req.body.category_id);
+
     const { error, value } = createProductSchema.validate(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
+    if (error){
+        //para evitar que se suba la img si llega a haber error
+        if(req.file){
+            fs.unlink(path.resolve(req.file.path), (err) => {
+                if(err) console.error('Error borrando imagen: ', err);
+            });
+        }
+    }
 
     try {
         const product_id = await Product.createProduct(value);
         return res.status(201).json({ product_id });
     } catch (error) {
+        //si hay error error y se subio el archivo, lo borra
+        if(req.file){
+            fs.unlink(path.resolve(req.file.path), (err) => {
+                if(err) console.error('Error borrando imagen: ', err);
+            });
+        }
         console.log(error);
         return res.status(500).json({ error: 'Error al crear el producto' })
     }
