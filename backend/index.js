@@ -13,7 +13,17 @@ app.use(cors());
 app.use(helmetMiddleware);
 app.use(morganMiddleware);
 app.use(limiter);
+
+app.use((req, res, next) => {
+    // Permite imágenes desde cualquier origen 
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Cross-Origin-Resource-Policy', 'cross-origin'); 
+    next();
+});
 app.use(express.static('public'));
+app.use('/uploads', express.static('uploads'));
 
 app.use('/api/auth', userRoutes);
 app.use('/api/auth', productRoutes)
