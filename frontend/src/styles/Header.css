@@ -38,6 +38,8 @@
 .header-container-links a{
     margin: 15px;
     cursor: pointer;
+    text-decoration: none;
+    color: white;
 }
 
 .header-container-btn{

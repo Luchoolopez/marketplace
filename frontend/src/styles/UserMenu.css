@@ -1,0 +1,48 @@
+.user-menu-modal {
+    position: fixed;
+    top: 80px;
+    right: 40px;
+    color: #000;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    padding: 24px;
+    z-index: 3000;
+    min-width: 200px;
+    height: 250px;
+    width: 220px;
+}
+
+.user-menu-close-btn {
+    float: right;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background: transparent;
+    height: 40px;
+    width: 30px;
+    border-radius: 30px;
+}
+
+.user-menu-close-btn:hover{
+    background: black;
+    color: white;
+}
+
+.user-menu-content {
+    margin-top: 16px;
+}
+
+.user-modal-container {
+    margin-bottom: 12px;
+}
+
+.user-modal-container-btn button {
+    width: 100%;
+    padding: 8px 0;
+    border-radius: 6px;
+    border: none;
+    background: #222;
+    color: #fff;
+    cursor: pointer;
+}

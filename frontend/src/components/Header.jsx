@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import UserMenu from "./UserMenu";
 import { IoSearchCircle } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
@@ -6,6 +7,7 @@ import '../styles/Header.css'
 
 const Header = () => {
     const [showSearch, setShowSearch] = useState(false);
+    const [showUserMenu, setShowUserMenu] = useState(false);
     const searchRef = useRef(null);
 
     useEffect(() => {
@@ -37,16 +39,20 @@ const Header = () => {
             <div className="header-container-img">
                 <img src="/images/kira_store_logo_white.png" alt="kira_logo_store"></img>
             </div>
+
             <div className="header-container-links">
                 <a href="/">Inicio</a>
                 <a href="/productos">Productos</a>
                 <a>Contacto</a>
             </div>
+
             <div className="header-container-btn">
                 <a onClick={handleSearchClick}><IoSearchCircle/></a>
-                <a><FaUserCircle/></a>
+                <a onClick={() => setShowUserMenu(!showUserMenu)}><FaUserCircle/></a>
                 <a><FaCartShopping/></a>
             </div>
+
+                {/*Barra de Busqueda*/}
                 <input
                     ref={searchRef}
                     type="text"
@@ -55,6 +61,7 @@ const Header = () => {
                     autoFocus={showSearch}
                     style={{display: showSearch ? 'flex' : 'flex'}}
                 />
+                {showUserMenu && <UserMenu onClose={() => setShowUserMenu(false)}/>}
         </div>
     );
 }
