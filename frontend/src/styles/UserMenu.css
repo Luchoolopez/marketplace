@@ -13,36 +13,72 @@
     width: 220px;
 }
 
-.user-menu-close-btn {
-    float: right;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background: transparent;
-    height: 40px;
-    width: 30px;
-    border-radius: 30px;
-}
-
-.user-menu-close-btn:hover{
-    background: black;
-    color: white;
-}
-
 .user-menu-content {
-    margin-top: 16px;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .user-modal-container {
     margin-bottom: 12px;
 }
 
+.user-modal-container-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
 .user-modal-container-btn button {
-    width: 100%;
-    padding: 8px 0;
     border-radius: 6px;
     border: none;
     background: #222;
     color: #fff;
     cursor: pointer;
+    height: 40px;  
+    width: 150px;
 }
+
+.user-modal-container-btn button:hover {
+    background: rgb(65, 65, 65);
+    border-color: black;
+}
+
+.user-modal-container-btn a{
+    text-decoration: none;
+    color: white;
+}
+
+.user-modal-login-logout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.user-modal-login-logout button{
+    border-radius: 6px;
+    border: none;
+    background: #222;
+    color: #fff;
+    cursor: pointer;
+    height: 40px;  
+    width: 150px;
+}
+
+.user-modal-login-logout button:hover{
+    background: rgb(65, 65, 65);
+    border-color: black;
+}
+
+.user-modal-login-logout a {
+    text-decoration: none;
+    color: white;
+}
+

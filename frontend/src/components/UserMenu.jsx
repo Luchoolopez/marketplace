@@ -5,9 +5,9 @@ import "../styles/UserMenu.css";
 const UserMenu = ({ onClose }) => {
     const { user, logout } = useAuth();
 
+
     return (
         <div className="user-menu-modal">
-            <button className="user-menu-close-btn" onClick={onClose}>X</button>
             <div className="user-menu-content">
                 {user ? (
                     <>
@@ -15,14 +15,16 @@ const UserMenu = ({ onClose }) => {
                             <p>Bienvenido {user.username}</p>
                         </div>
                         <div className="user-modal-container-btn">
+                            <button><a href="mi-perfil">Mi Perfil</a></button>
                             <button onClick={logout}>Cerrar Sesión</button>
                         </div>
                     </>
                 ) : (
                     <>
-                        <a href="iniciar-sesion">Iniciar sesión</a>
-                        <br />
-                        <a href="registrarse">Registrarse</a>
+                        <div className="user-modal-login-logout">
+                        <button><a href="iniciar-sesion">Iniciar sesión</a></button>
+                        <button><a href="registrarse">Registrarse</a></button>
+                        </div>
                     </>
                 )}
             </div>
