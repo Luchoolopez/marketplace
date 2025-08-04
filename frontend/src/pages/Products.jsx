@@ -1,22 +1,34 @@
-import React from 'react'
+import React from 'react';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../hooks/useProducts';
-import Layout from '../components/Layout'
+import Layout from '../components/Layout';
+import { useAuth } from "../hooks/useAuth";
+import '../styles/Products.css';
 
 const Product = () => {
   const {products, error, loading} = useProducts();
-  if(loading) return <div>Cargando productos...</div>;
+  const { user } = useAuth();
+  if(loading) return <div className="loading">Cargando productos...</div>;
 
   return (
-    <div>
+    <div className="products-container">
       <Layout/>
-      <h2>Productos</h2>
-      {error && <div>{error}</div>}
-      <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px'}}>
+      <h2 className="products-title">Productos</h2>
+      {error && <div className="error-message">{error}</div>}
+      <div className="products-grid">
         {products.map(product => (
-          <div key={product.product_id} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <div key={product.product_id} className="product-item">
             <ProductCard product={product}/>
-            <button>Comprar</button>
+            { user?.role === 'admin' ? (
+              <div className='product-btn admin-btns'>
+                <button className="buy-btn">Comprar</button>
+                <button className="delete-btn">Eliminar Producto</button>
+              </div>
+            ) : (
+              <div className='product-btn'>
+                <button className="buy-btn">Comprar</button>
+              </div>
+            )}
           </div>
         ))}
       </div>

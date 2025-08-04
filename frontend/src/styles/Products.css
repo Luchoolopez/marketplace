@@ -1,0 +1,87 @@
+.products-container {
+  padding: 20px;
+}
+
+.loading {
+  font-size: 18px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.products-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 250px; /* Ancho fijo para cada card */
+  min-height: 400px; /* Altura mínima para todas las cards */
+  height: auto;
+  border: 1px solid #000; /* Opcional: borde para visualizar mejor */
+  border-radius: 8px; /* Opcional: bordes redondeados */
+  background: grey;
+  padding: 15px;
+  box-sizing: border-box; /* Incluye padding en el ancho/alto total */
+}
+
+/* Asegura que el ProductCard ocupe el espacio disponible */
+.product-item > :first-child {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.product-btn {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px; /* Empuja los botones hacia abajo */
+  width: 100%;
+}
+
+.admin-btns {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.buy-btn {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.buy-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn {
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
