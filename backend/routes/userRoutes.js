@@ -4,6 +4,7 @@ const router = express.Router();
 const {
     signUp,
     login,
+    getProfile,
     editProfile,
     changePassword,
     getAllUsers,
@@ -17,6 +18,7 @@ router.post('/registrarse', signUp);
 router.post('/iniciar-sesion', login);
 
 //rutas protegidas
+router.get('/perfil/:user_id', authenticateToken, getProfile);
 router.put('/editar-perfil/:user_id', authenticateToken, editProfile);
 router.put('/cambiar-contraseña', authenticateToken, changePassword);
 router.get('/usuarios', authenticateToken, getAllUsers);

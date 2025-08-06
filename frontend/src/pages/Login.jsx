@@ -19,6 +19,7 @@ const Login = () => {
                 password
             });
             //guarda el usuario en el estado global o localstorage
+            console.log(response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
             navigate('/');

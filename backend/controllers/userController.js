@@ -27,6 +27,29 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.getProfile = async (req, res) => {
+    try {
+        const profile = await User.getProfile(req.params.user_id);
+
+        if (!profile) {
+            return res.status(404).json({
+                success: false,
+                error: 'Usuario no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: profile
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: 'Error al obtener el perfil'
+        });
+    }
+};
+
 exports.editProfile = async (req, res) => {
     const { error, value } = editProfileSchema.validate(req.body);
     if (error) return res.status(400).json({ error: error.details[0].message });
