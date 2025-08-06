@@ -16,7 +16,7 @@ const UserMenu = ({ onClose }) => {
                         </div>
                         <div className="user-modal-container-btn">
                             
-                            <button><a href="mi-perfil">Mi Perfil</a></button>
+                            <button><a href="perfil">Mi Perfil</a></button>
                             <button onClick={logout}>Cerrar Sesión</button>
                         </div>
                     </>
