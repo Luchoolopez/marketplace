@@ -22,7 +22,12 @@ async function login({ email, password }) {
     const passwordMatch = await bcrypt.compare(password, user.password_hash);
     if (!passwordMatch) return null;
 
-    return user; // retorna al usuario si todo es correcto
+    return {
+        user_id: user.user_id,
+        email: user.email,
+        username: user.username,
+        role: user.role
+    };
 }
 
 async function getProfile(user_id) {

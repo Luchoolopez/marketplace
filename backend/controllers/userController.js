@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 const { signUpSchema, loginSchema, editProfileSchema, changePasswordSchema } = require('../schemas/userSchema');
 
 exports.signUp = async (req, res) => {
@@ -21,7 +22,28 @@ exports.login = async (req, res) => {
     try {
         const user = await User.login(value);
         if (!user) return res.status(401).json({ error: 'Credenciales invalidas' });
-        res.json({ user });
+
+        if(!process.env.JWT_SECRET) {
+            throw new Error('JWT_SECRET no esta configurado');
+        }
+        const token = jwt.sign(
+            {
+                id: user.user_id,
+                email: user.email,
+                role: user.role
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || '1h'}
+        );
+        res.json({
+            user: {
+                user_id: user.user_id,
+                email: user.email,
+                username: user.username,
+                role: user.role
+            },
+            token
+        });
     } catch (error) {
         res.status(500).json({ error: 'Error al iniciar sesión' });
     }
