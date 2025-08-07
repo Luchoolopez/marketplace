@@ -1,63 +1,77 @@
-import React from "react";
-
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-const useProfile = (userId) => {
-    const [profile, setProfile] = useState(null);
+export const useProfile = (userId) => {
+    const [profileData, setProfileData] = useState({
+        username: '',
+        email: '',
+        role: '',
+        full_name: '',
+        address: '',
+        phone: '',
+        avatar_url: ''
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        role: ''
-    });
 
-    //obtener datos del perfil
-    const fetchProfile = async() => {
-        try{
+    // Obtener datos del perfil
+    const fetchProfile = async () => {
+        try {
             setLoading(true);
-            const response = await axios.get(`/api/auth/perfil/${userId}`, {
+            const response = await axios.get(`http://localhost:3000/api/auth/perfil/${userId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
 
-            setProfile(response.data);
-            setFormData({
+            console.log('Respuesta de la API: ', response.data)
+
+            setProfileData({
                 username: response.data.username || '',
                 email: response.data.email || '',
-                role: response.data.role || ''
+                role: response.data.role || '',
+                full_name: response.data.full_name || '',
+                address: response.data.address || '',
+                phone: response.data.phone || '',
+                avatar_url: response.data.avatar_url || ''
             });
-        }catch(error){
+        } catch (error) {
             setError(error.response?.data?.error || 'Error al cargar el perfil');
-        }finally{
+        } finally {
             setLoading(false);
         }
     };
 
-    //actualizar el perfil
-    const updateProfile = async () =>{
-        try{
+    // Actualizar el perfil
+    const updateProfile = async () => {
+        try {
             setLoading(true);
-            await axios.put(`/api/auth/editar-perfil/${userId}`, formData, {
+            const profileUpdate = {
+                full_name: profileData.full_name,
+                address: profileData.address,
+                phone: profileData.phone,
+                avatar_url: profileData.avatar_url
+            };
+
+            await axios.put(`/api/auth/editar-perfil/${userId}`, profileUpdate, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            await fetchProfile(); //refresca los datos
+
+            await fetchProfile(); // Refresca los datos
             setIsEditing(false);
-        }catch(error){
+        } catch (error) {
             setError(error.response?.data?.error || 'Error al actualizar el perfil');
-        }finally{
+        } finally {
             setLoading(false);
         }
     };
 
-    const handleChange = async(e) => {
-        const { name, value} = e.target;
-        setFormData(prev => ({
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProfileData(prev => ({
             ...prev,
             [name]: value
         }));
@@ -65,24 +79,19 @@ const useProfile = (userId) => {
 
     const cancelEdit = () => {
         setIsEditing(false);
-        setFormData({
-            username: profile?.username || '',
-            email: profile?.email || '',
-            role: profile?.role || ''
-        });
+        fetchProfile(); // Restablece a los datos originales
     };
 
     useEffect(() => {
-        if(userId){
+        if (userId) {
             fetchProfile();
         }
     }, [userId]);
 
     return {
-        profile,
+        profileData,
         loading,
         error,
-        formData,
         isEditing,
         setIsEditing,
         handleChange,
@@ -90,5 +99,3 @@ const useProfile = (userId) => {
         cancelEdit
     };
 };
-
-export default useProfile;
