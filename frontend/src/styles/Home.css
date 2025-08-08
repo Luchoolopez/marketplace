@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* Evita scroll horizontal si la imagen es muy grande */
+}
+
+.home_page_container{
+    width: 100%;
+    max-width: none;
+}
+
+.img-container{
+    height: 80vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
