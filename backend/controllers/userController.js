@@ -45,6 +45,7 @@ exports.login = async (req, res) => {
             token
         });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: 'Error al iniciar sesión' });
     }
 };
@@ -62,7 +63,16 @@ exports.getProfile = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            data: profile
+            data: {
+                user_id: profile.user_id,
+                username: profile.username,
+                email: profile.email,
+                role: profile.role,
+                full_name: profile.full_name,
+                address: profile.address,
+                phone: profile.phone,
+                avatar_url: profile.avatar_url
+            }
         });
     } catch (error) {
         return res.status(500).json({

@@ -25,19 +25,20 @@ export const useProfile = (userId) => {
                 }
             });
 
-            console.log('Respuesta de la API: ', response.data)
+            const apiData = response.data.data;
 
-            setProfileData({
-                username: response.data.username || '',
-                email: response.data.email || '',
-                role: response.data.role || '',
-                full_name: response.data.full_name || '',
-                address: response.data.address || '',
-                phone: response.data.phone || '',
-                avatar_url: response.data.avatar_url || ''
-            });
+            setProfileData(prev => ({
+                ...prev,
+                email: apiData.email || prev.email,
+                role: apiData.role || prev.role,
+                full_name: apiData.full_name || 'No especificado',
+                address: apiData.address || 'No especificado',
+                phone: apiData.phone || 'No especificado',
+                avatar_url: apiData.avatar_url || ''
+            }));
         } catch (error) {
             setError(error.response?.data?.error || 'Error al cargar el perfil');
+            console.error('Error en fetchProfile:', error);
         } finally {
             setLoading(false);
         }
@@ -54,7 +55,7 @@ export const useProfile = (userId) => {
                 avatar_url: profileData.avatar_url
             };
 
-            await axios.put(`/api/auth/editar-perfil/${userId}`, profileUpdate, {
+            await axios.put(`http://localhost:3000/api/auth/editar-perfil/${userId}`, profileUpdate, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }

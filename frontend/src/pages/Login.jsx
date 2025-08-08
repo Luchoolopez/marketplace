@@ -21,6 +21,7 @@ const Login = () => {
             //guarda el usuario en el estado global o localstorage
             console.log(response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('token', response.data.token);
 
             navigate('/');
         } catch (error) {

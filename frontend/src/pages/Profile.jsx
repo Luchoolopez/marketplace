@@ -5,6 +5,7 @@ import { useProfile } from "../hooks/useProfile";
 
 const Profile = () => {
     const { user } = useAuth();
+    console.log("User desde useAuth:", user);
     const {
         profileData,
         loading,
@@ -19,6 +20,16 @@ const Profile = () => {
     if (loading) return <div>Cargando perfil...</div>;
     if (error) return <div>Error: {error}</div>;
 
+    const combinedData = {
+        username: user?.username || profileData.username,
+        email: user?.email || profileData.email,
+        role: user?.role || profileData.role,
+        full_name: profileData.full_name,
+        address: profileData.address,
+        phone: profileData.phone,
+        avatar_url: profileData.avatar_url
+    };
+
     return (
         <section className="profile-container">
             <Layout />
@@ -29,11 +40,11 @@ const Profile = () => {
                     <input
                         type="text"
                         name="full_name"
-                        value={profileData.full_name}
+                        value={combinedData.full_name}
                         onChange={handleChange}
                     />
                 ) : (
-                    <p>{profileData.full_name || 'No especificado'}</p>
+                    <p>{combinedData.full_name || 'No especificado'}</p>
                 )}
             </div>
 
@@ -43,7 +54,7 @@ const Profile = () => {
                     <input
                         type="text"
                         name="username"
-                        value={profileData.username}
+                        value={combinedData.username}
                         onChange={handleChange}
                     />
                 ) : (
@@ -57,11 +68,11 @@ const Profile = () => {
                     <input
                         type="email"
                         name="email"
-                        value={profileData.email}
+                        value={combinedData.email}
                         onChange={handleChange}
                     />
                 ) : (
-                    <p>{profileData.email}</p>
+                    <p>{combinedData.email}</p>
                 )}
             </div>
 
@@ -71,11 +82,11 @@ const Profile = () => {
                     <input
                         type="text"
                         name="address"
-                        value={profileData.address}
+                        value={combinedData.address}
                         onChange={handleChange}
                     />
                 ) : (
-                    <p>{profileData.address || 'No especificado'}</p>
+                    <p>{combinedData.address || 'No especificado'}</p>
                 )}
             </div>
             
@@ -85,17 +96,17 @@ const Profile = () => {
                     <input
                         type="text"
                         name="phone"
-                        value={profileData.phone}
+                        value={combinedData.phone}
                         onChange={handleChange}
                     />
                 ) : (
-                    <p>{profileData.phone || 'No especificado'}</p>
+                    <p>{combinedData.phone || 'No especificado'}</p>
                 )}
             </div>
 
             <div className="profile-field">
                 <label>Rol</label>
-                <p>{profileData.role}</p>
+                <p>{combinedData.role}</p>
             </div>
 
             <div className="profile-actions">
