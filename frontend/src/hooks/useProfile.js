@@ -13,7 +13,7 @@ export const useProfile = (userId) => {
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
+    const [editingField, setEditingField] = useState(null);
 
     // Obtener datos del perfil
     const fetchProfile = async () => {
@@ -27,15 +27,14 @@ export const useProfile = (userId) => {
 
             const apiData = response.data.data;
 
-            setProfileData(prev => ({
-                ...prev,
-                email: apiData.email || prev.email,
-                role: apiData.role || prev.role,
+            setProfileData({
+                email: apiData.email || '',
+                role: apiData.role || '',
                 full_name: apiData.full_name || 'No especificado',
                 address: apiData.address || 'No especificado',
                 phone: apiData.phone || 'No especificado',
                 avatar_url: apiData.avatar_url || ''
-            }));
+            });
         } catch (error) {
             setError(error.response?.data?.error || 'Error al cargar el perfil');
             console.error('Error en fetchProfile:', error);
@@ -45,26 +44,29 @@ export const useProfile = (userId) => {
     };
 
     // Actualizar el perfil
-    const updateProfile = async () => {
+    const updateField = async (fieldName, value) => {
         try {
             setLoading(true);
-            const profileUpdate = {
-                full_name: profileData.full_name,
-                address: profileData.address,
-                phone: profileData.phone,
-                avatar_url: profileData.avatar_url
-            };
-
-            await axios.put(`http://localhost:3000/api/auth/editar-perfil/${userId}`, profileUpdate, {
+            await axios.put(
+                `http://localhost:3000/api/auth/editar-perfil/${userId}`,
+                {[fieldName]: value}, //envia solo el campo que se esta editando
+                {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
-            });
+            }
+        );
 
-            await fetchProfile(); // Refresca los datos
-            setIsEditing(false);
+        setProfileData(prev => ({
+            ...prev,
+            [fieldName]: value
+        }));
+
+        setEditingField(null);
+
         } catch (error) {
-            setError(error.response?.data?.error || 'Error al actualizar el perfil');
+            setError(`Error al actualizar ${fieldName}: ${error?.response?.data?.error || 'Error desconocido'}`);
+            await fetchProfile();
         } finally {
             setLoading(false);
         }
@@ -78,7 +80,12 @@ export const useProfile = (userId) => {
         }));
     };
 
-    const cancelEdit = () => {
+    const startEditing = (fieldName) =>{
+        setEditingField(fieldName);
+        setError(null); //limpia errores anteriores al iniciar edicion
+    }
+
+    const cancelEditing = () => {
         setIsEditing(false);
         fetchProfile(); // Restablece a los datos originales
     };
@@ -93,10 +100,10 @@ export const useProfile = (userId) => {
         profileData,
         loading,
         error,
-        isEditing,
-        setIsEditing,
+        editingField,
+        startEditing,
+        updateField,
         handleChange,
-        updateProfile,
-        cancelEdit
+        cancelEditing
     };
 };

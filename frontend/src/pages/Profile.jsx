@@ -2,19 +2,21 @@ import React from "react";
 import Layout from "../components/Layout";
 import { useAuth } from "../hooks/useAuth";
 import { useProfile } from "../hooks/useProfile";
+import '../styles/Profile.css'
+
+/*Hay que cambiar el disenio, no funciona el btn de cancelar*/
 
 const Profile = () => {
     const { user } = useAuth();
-    console.log("User desde useAuth:", user);
     const {
         profileData,
         loading,
         error,
-        isEditing,
-        setIsEditing,
+        editingField,
+        startEditing,
+        updateField,
         handleChange,
-        updateProfile,
-        cancelEdit
+        cancelEditing
     } = useProfile(user?.user_id);
 
     if (loading) return <div>Cargando perfil...</div>;
@@ -30,78 +32,33 @@ const Profile = () => {
         avatar_url: profileData.avatar_url
     };
 
+    // Función para manejar el guardado de cada campo
+    const handleSave = (fieldName) => {
+        updateField(fieldName, profileData[fieldName]);
+    };
+
+    // Campos editables con sus configuraciones
+    const editableFields = [
+        { name: 'full_name', label: 'Nombre' },
+        { name: 'address', label: 'Dirección' },
+        { name: 'phone', label: 'Número de Teléfono' }
+    ];
+
     return (
         <section className="profile-container">
             <Layout />
-            <div className="profile-field">
+            <div className="profile-header">
                 <h2>Mi Perfil</h2>
-                <label>Nombre</label>
-                {isEditing ? (
-                    <input
-                        type="text"
-                        name="full_name"
-                        value={combinedData.full_name}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{combinedData.full_name || 'No especificado'}</p>
-                )}
             </div>
 
             <div className="profile-field">
                 <label>Usuario</label>
-                {isEditing ? (
-                    <input
-                        type="text"
-                        name="username"
-                        value={combinedData.username}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{profileData.username}</p>
-                )}
+                <p>{combinedData.username}</p>
             </div>
 
             <div className="profile-field">
                 <label>Email</label>
-                {isEditing ? (
-                    <input
-                        type="email"
-                        name="email"
-                        value={combinedData.email}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{combinedData.email}</p>
-                )}
-            </div>
-
-            <div className="profile-field">
-                <label>Dirección</label>
-                {isEditing ? (
-                    <input
-                        type="text"
-                        name="address"
-                        value={combinedData.address}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{combinedData.address || 'No especificado'}</p>
-                )}
-            </div>
-            
-            <div className="profile-field">
-                <label>Número de Teléfono</label>
-                {isEditing ? (
-                    <input
-                        type="text"
-                        name="phone"
-                        value={combinedData.phone}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <p>{combinedData.phone || 'No especificado'}</p>
-                )}
+                <p>{combinedData.email}</p>
             </div>
 
             <div className="profile-field">
@@ -109,16 +66,30 @@ const Profile = () => {
                 <p>{combinedData.role}</p>
             </div>
 
-            <div className="profile-actions">
-                {isEditing ? (
-                    <>
-                        <button onClick={updateProfile}>Guardar Cambios</button>
-                        <button onClick={cancelEdit}>Cancelar</button>
-                    </>
-                ) : (
-                    <button onClick={() => setIsEditing(true)}>Editar</button>
-                )}
-            </div>
+            {editableFields.map((field) => (
+                <div className="profile-field" key={field.name}>
+                    <label>{field.label}</label>
+                    {editingField === field.name ? (
+                        <div className="edit-mode">
+                            <input
+                                type="text"
+                                name={field.name}
+                                value={profileData[field.name]}
+                                onChange={handleChange}
+                            />
+                            <div className="edit-actions">
+                                <button onClick={() => handleSave(field.name)}>Guardar</button>
+                                <button onClick={cancelEditing}>Cancelar</button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="view-mode">
+                            <p>{combinedData[field.name]}</p>
+                            <button onClick={() => startEditing(field.name)}>Editar</button>
+                        </div>
+                    )}
+                </div>
+            ))}
         </section>
     );
 };

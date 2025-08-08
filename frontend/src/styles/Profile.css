@@ -1,0 +1,87 @@
+.profile-container {
+    max-width: 1000px;
+    width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: grey;
+    border-radius: 20px;
+}
+
+.profile-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.profile-field {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+
+.profile-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.profile-field p {
+    margin: 0;
+    padding: 8px 0;
+}
+
+.edit-mode {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.edit-mode input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.view-mode {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(200, 196, 196);
+    border-radius: 10px;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.view-mode button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.edit-actions button:first-child {
+    background-color: #2196F3;
+    color: white;
+}
+
+.edit-actions button:last-child {
+    background-color: #f44336;
+    color: white;
+}
