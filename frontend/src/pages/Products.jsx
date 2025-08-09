@@ -13,7 +13,6 @@ const Product = () => {
   return (
     <div className="products-container">
       <Layout/>
-      <h2 className="products-title">Productos</h2>
       {error && <div className="error-message">{error}</div>}
       <div className="products-grid">
         {products.map(product => (

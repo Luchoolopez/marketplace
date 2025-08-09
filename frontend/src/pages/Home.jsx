@@ -3,6 +3,7 @@ import Product from './Products'
 import Layout from '../components/Layout'
 import { useAuth } from '../hooks/useAuth'
 import '../styles/Home.css';
+import Footer from '../components/Footer';
 
 
 const Home = () => {
@@ -26,6 +27,7 @@ const Home = () => {
         </div>
       )}
       <Product />
+      <Footer/>
       </div>
     </div>
   )
