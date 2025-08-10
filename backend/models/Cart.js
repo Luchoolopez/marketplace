@@ -31,6 +31,13 @@ class Cart {
         }
     }
 
+    static async getCart(userId){
+        const [items] = await pool.query(
+            'SELECT ci.*, p.name, p.price, p.image_url, p.stock FROM cart_items ci JOIN products p ON ci.product_id = p.product_id WHERE ci.user_id = ? and p.is_active = TRUE', [userId]
+        );
+        return items;
+    }
+
     static async updateCartItem(userId, productId, quantity){
         if(quantity <= 0){
             await this.removeFromCart(userId, productId);
