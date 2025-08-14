@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const OrderService = require('../services/orderServices');
 const { createOrderSchema, updateOrderStatusSchema, getOrderByIdSchema, deleteOrderSchema } = require('../schemas/orderSchema');
 
 exports.createOrder = async (req, res) => {
@@ -6,8 +7,9 @@ exports.createOrder = async (req, res) => {
     if (error) return res.status(400).json({ error: error.details[0].message });
 
     try {
-        const order_id = await Order.createOrder(value, value.items);
-        return res.status(201).json({ message: 'Orden creada', order_id });
+        const order_id = await OrderService.createOrderFromCart(req.user.id);
+        const order = await Order.getOrderById(order_id);
+        return res.status(201).json({ success: true, message: 'Orden creada', order });
     } catch (error) {
         return res.status(500).json({ error: 'Error al crear el producto' })
     }

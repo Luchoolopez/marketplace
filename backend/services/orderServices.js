@@ -8,13 +8,13 @@ class OrderService {
     try {
       await connection.beginTransaction();
 
-      // 1. Obtener items del carrito
+      //Obtener items del carrito
       const cartItems = await Cart.getCart(userId);
       if (cartItems.length === 0) {
         throw new Error('El carrito está vacío');
       }
 
-      // 2. Validar stock y calcular total
+      //Validar stock y calcular total
       let totalAmount = 0;
       for (const item of cartItems) {
         const product = await Product.getProductById(item.product_id);
@@ -24,7 +24,7 @@ class OrderService {
         totalAmount += product.price * item.quantity;
       }
 
-      // 3. Crear la orden
+      //Crear la orden
       const orderData = {
         customer_id: userId,
         total_amount: totalAmount,
@@ -37,7 +37,7 @@ class OrderService {
         unit_price: item.price
       })));
 
-      // 4. Vaciar carrito
+      //Vaciar carrito
       await Cart.clearCart(userId);
 
       await connection.commit();
