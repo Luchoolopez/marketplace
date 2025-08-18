@@ -7,6 +7,8 @@ const PORT = 3000;
 
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
+const cartRoutes = require('./routes/CartRoutes')
+
 
 app.use(express.json()); //para parsear a JSON las peticiones
 app.use(cors()); 
@@ -26,7 +28,8 @@ app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 
 app.use('/api/auth', userRoutes);
-app.use('/api/auth', productRoutes)
+app.use('/api/auth', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
