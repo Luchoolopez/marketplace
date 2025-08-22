@@ -7,8 +7,8 @@ router.use(authenticateToken);
 
 router.post('/add', cartController.addToCart);
 router.get('/', cartController.getCart);
-router.put('update_cart/:product_id', cartController.updateCartItem);
-router.delete('delete_cart/:product_id', cartController.removeFromCart);
-router.delete('clear_cart/:product_id', cartController.clearCart);
+router.put('/:product_id', cartController.updateCartItem);
+router.delete('/delete_product/:product_id', cartController.removeFromCart);
+router.delete('/clear_cart/:user_id', cartController.clearCart);
 
 module.exports = router;

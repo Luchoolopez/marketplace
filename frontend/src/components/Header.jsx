@@ -49,7 +49,7 @@ const Header = () => {
             <div className="header-container-btn">
                 <a onClick={handleSearchClick}><IoSearchCircle/></a>
                 <a onClick={() => setShowUserMenu(!showUserMenu)}><FaUserCircle/></a>
-                <a><FaCartShopping/></a>
+                <a href="/carrito"><FaCartShopping/></a>
             </div>
 
                 {/*Barra de Busqueda*/}
